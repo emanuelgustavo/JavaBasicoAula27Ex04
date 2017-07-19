@@ -1,0 +1,66 @@
+package com.emanuel.javabasico.aula27Ex04;
+
+import java.util.Scanner;
+
+public class Ex04_JogodaVelha {
+
+	public static void main(String[] args) {
+		
+		Scanner scan = new Scanner(System.in);
+		
+		JogodaVelha jogodaVelha = new JogodaVelha();
+		
+		int menu = 1;
+		int tipodeJogo = 0;
+		int flagRodadas = 0;
+		
+		
+		while ( menu != 0){
+			
+			int numRodadas = 0;
+			
+			System.out.println("Digite o tipo de jogo: ");
+			System.out.println("1 - Melhor de 3!\n2 - Melhor de 5!\n3 - Melhor de 7!\n0 - Sair do Jogo!");
+			tipodeJogo = scan.nextInt();
+			
+			switch (tipodeJogo) {
+			
+				case 0: menu = 0; System.out.println("Você saiu do jogo!"); break;
+				case 1: flagRodadas = 3; System.out.println("Você escolheu melhor de 3"); break;
+				case 2: flagRodadas = 5; System.out.println("Você escolheu melhor de 5"); break;
+				case 3: flagRodadas = 7; System.out.println("Você escolheu melhor de 7"); break;				
+				default: break;
+				
+			}
+			
+			while ( numRodadas < flagRodadas ){
+				
+				jogodaVelha.iniciarTabuleiro();
+				
+				numRodadas++;
+				
+				System.out.println("\n\n----------------Partida " + numRodadas + " ------------------\n\n");
+			
+				jogodaVelha.jogarJogodaVelha();
+				
+				jogodaVelha.mostrarPlacar();				
+				
+			}
+			
+			if ( jogodaVelha.vitJogador1 > jogodaVelha.vitJogador2){
+				
+				System.out.println("Parabéns! Jogador 1 venceu a melhor de " + flagRodadas);
+								
+			} else if ( jogodaVelha.vitJogador2 > jogodaVelha.vitJogador1 ){
+				
+				System.out.println("Parabéns! Jogador 1 venceu a melhor de " + flagRodadas);
+				
+			}
+		
+		}
+		
+		scan.close();
+		
+	}	
+
+}
