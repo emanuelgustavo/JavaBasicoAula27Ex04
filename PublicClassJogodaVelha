@@ -1,0 +1,192 @@
+package com.emanuel.javabasico.aula27Ex04;
+
+import java.util.Scanner;
+
+public class JogodaVelha {
+	
+	Scanner scan = new Scanner(System.in);
+		
+	String[][] tabuleiro;
+	
+	boolean vencedor1, vencedor2, initGame;
+	
+	int rodadas;
+	int vitJogador1 = 0;
+	int vitJogador2 = 0;
+	int derJogador1 = 0;
+	int derJogador2 = 0;
+	
+		
+	
+	void iniciarTabuleiro(){
+		
+		tabuleiro = new String[3][3];
+		
+		vencedor1 = false;
+		vencedor2 = false;
+		initGame = true;
+		
+		rodadas = 0;
+		
+		for ( int i = 0; i < tabuleiro.length; i++){
+			
+			for ( int j = 0; j < tabuleiro[i].length; j++) {
+				
+				tabuleiro[i][j] = "   ";				
+				
+			}
+			
+		}
+		
+	}
+	
+	
+	void jogarJogodaVelha(){
+		
+		if ( initGame == true){
+		
+			rodadas = 1;
+			int posX = 0;
+			int posY = 0;
+		
+			while ( rodadas < 10 ) { //bloco do jogo
+				
+				if ( rodadas % 2 != 0 ){
+			
+					System.out.println("É a vez do jogador 1!");
+					
+				} else {
+				
+					System.out.println("É a vez do jogador 2!");
+										
+				}
+				
+				System.out.println("Digite a posição x da jogada 0-2 da rodada " + rodadas + " : " );
+				posX = scan.nextInt();
+				System.out.println("Digite a posição y da jogada 0-2 da rodada " + rodadas + " : " );
+				posY = scan.nextInt();
+			
+				if ( posX >= 0 && posX <= 2){
+				
+					if ( tabuleiro[posX][posY] == "   " ){
+				
+						if ( rodadas % 2 == 0 ){
+					
+							tabuleiro[posX][posY] = " O ";
+						
+						} else {
+						
+							tabuleiro[posX][posY] = " X ";
+					
+						}
+										
+					rodadas++;
+				
+					} else {
+				
+						System.out.println("Jogada inválida!");
+				
+					}
+		
+				}			
+			
+				mostrarTabuleiro();		
+				
+				if ( rodadas >= 5 ){
+					
+					verificarResultado();
+					
+				}
+				
+			}
+		
+		} else {
+			
+			System.out.println(" O jogo não foi inicializado corretamente! Chame o método de inicio!");
+			
+		}
+		
+	}
+
+	
+	void mostrarTabuleiro(){
+		//inicio output do tabuleiro
+
+		for( int i = 0; i < tabuleiro.length; i++ ){
+		
+			System.out.print("      " + i);
+		
+		}
+	
+		System.out.println();
+	
+		for ( int i = 0; i < tabuleiro.length; i++ ){
+		
+			System.out.print(" " + i + " : ");
+		
+			for ( int j = 0; j < tabuleiro[i].length; j++ ){
+			
+				System.out.print( tabuleiro[i][j] + " | " );
+			
+			}
+		
+			System.out.println();
+	
+		}
+		
+		//final output tabuleiro
+		
+	}
+	
+	
+	void verificarResultado(){
+		
+		if ( 	( tabuleiro[0][0] == " X " && tabuleiro[0][1] == " X " && tabuleiro[0][2] == " X " ) || //linha 1
+				( tabuleiro[1][0] == " X " && tabuleiro[1][1] == " X " && tabuleiro[1][2] == " X " ) || //linha 2
+				( tabuleiro[2][0] == " X " && tabuleiro[2][1] == " X " && tabuleiro[2][2] == " X " ) || //linha 3
+				( tabuleiro[0][0] == " X " && tabuleiro[1][0] == " X " && tabuleiro[2][0] == " X " ) || //coluna 1
+				( tabuleiro[0][1] == " X " && tabuleiro[1][1] == " X " && tabuleiro[2][1] == " X " ) || //coluna 2
+				( tabuleiro[0][2] == " X " && tabuleiro[1][2] == " X " && tabuleiro[2][2] == " X " ) || //coluna 3
+				( tabuleiro[0][0] == " X " && tabuleiro[1][1] == " X " && tabuleiro[2][2] == " X " ) ||
+				( tabuleiro[0][2] == " X " && tabuleiro[1][1] == " X " && tabuleiro[2][0] == " X " ) ){
+				
+				rodadas = 10;
+				vencedor1 = true;
+				vitJogador1++;
+				derJogador2++;
+				System.out.println("Parabéns Jogador 1, você venceu o jogo!!");
+				
+		} else if ( ( tabuleiro[0][0] == " O " && tabuleiro[0][1] == " O " && tabuleiro[0][2] == " O " ) || //linha 1
+					( tabuleiro[1][0] == " O " && tabuleiro[1][1] == " O " && tabuleiro[1][2] == " O " ) ||     //linha 2
+					( tabuleiro[2][0] == " O " && tabuleiro[2][1] == " O " && tabuleiro[2][2] == " O " ) ||     //linha 3
+					( tabuleiro[0][0] == " O " && tabuleiro[1][0] == " O " && tabuleiro[2][0] == " O " ) ||     //coluna 1
+					( tabuleiro[0][1] == " O " && tabuleiro[1][1] == " O " && tabuleiro[2][1] == " O " ) ||	  //coluna 2
+					( tabuleiro[0][2] == " O " && tabuleiro[1][2] == " O " && tabuleiro[2][2] == " O " ) ||     //coluna 3
+					( tabuleiro[0][0] == " O " && tabuleiro[1][1] == " O " && tabuleiro[2][2] == " O " ) ||
+					( tabuleiro[0][2] == " O " && tabuleiro[1][1] == " O " && tabuleiro[2][0] == " O " ) ){
+					
+				rodadas = 10;
+				vencedor2 = true;
+				vitJogador2++;
+				derJogador1++;
+				System.out.println("Parabéns Jogador 2, você venceu o jogo!!");
+					
+		
+		}
+	
+	}
+	
+	
+	void mostrarPlacar(){
+		
+		System.out.println("\n---------------------\n-------Placar--------\n");
+		System.out.println("\t   Vitorias   Derrotas");
+		System.out.println("Jogador 1 \t" + vitJogador1 + " \t  " + derJogador1);
+		System.out.println("Jogador 2 \t" + vitJogador2 + " \t  " + derJogador2);
+		System.out.println("\n---------------------\n");
+				
+	}
+	
+	
+	
+}
